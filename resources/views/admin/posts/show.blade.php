@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <h1>{{$post->title}}</h1>
+        <h3>{{$post->title}}</h3>
         <p>{{$post->content}}</p>
         <address>{{$post->getFormattedDate('created_at')}}</address>
     </div>

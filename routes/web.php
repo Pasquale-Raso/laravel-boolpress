@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('guest.home');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 
 //ROTE PER CUI SI NECESSITA L'AUTENTICAZIONE
@@ -27,3 +27,13 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::resource('posts', 'PostController');
 
 });
+
+//todo                                  VUE JS
+//! GESTIAMO TUTTE LE ROTTE CHE NON SONO DI Auth:: (login, register ecc) e neanche di /admin
+
+Route::get('{any?}', function() {
+    return view('guest.home');
+})->where('any', '.*');
+
+//!__________________________________________________________________________________________
+
