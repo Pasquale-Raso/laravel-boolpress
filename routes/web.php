@@ -19,4 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/admin', 'HomeController@index')->name('home');
+
+//ROTE PER CUI SI NECESSITA L'AUTENTICAZIONE
+Route::middleware('auth')->name('admin.')->prefix('admin')->namespace('Admin')->group(function () {
+//tutte le rotte protette
+Route::get('/', 'HomeController@index')->name('home');
+});
