@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('guest.home');
 });
 
-Auth::routes(['register' => false]);
+Auth::routes(['register' => true]);
 
 
 //ROTE PER CUI SI NECESSITA L'AUTENTICAZIONE
