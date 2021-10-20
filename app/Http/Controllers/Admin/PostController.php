@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -16,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(5);
+        $posts = Post::orderBy('id', 'desc')->paginate(5);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -49,7 +50,7 @@ class PostController extends Controller
             'image' => ['required', 'string', 'min:2', 'max:500'],
         ], [
             'required' => "il campo del :attribute è obbligatorio",
-            'title.unique' => "il fumetto $request->title esiste già",
+            'title.unique' => "il post $request->title esiste già"
 
         ]);
         //todo ----------------------------
@@ -98,6 +99,22 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        //todo VALIDAZIONE viene fatta qui per l'edit
+        $request->validate([
+            // unique verifica se ci sono altri titoli uguali
+
+            // quando si modifica un campo in edit e si salva, laravel non riconosce il titolo dicendo che è gia presente e non ti da il lascito alla nuova creazione del post. per questo si aggiunge il metodo Rule (con questa dicitura in basso: Rule::unique('posts')->ignore($post->id)) sia in update e sia in 'use' (con questa dicitura in alto: use Illuminate\Validation\Rule;)
+
+            'title' => ['required', 'string', Rule::unique('posts')->ignore($post->id), 'min:2', 'max:255'],
+            'content' => ['required', 'string', 'min:2', 'max:1000'],
+            'image' => ['required', 'string', 'min:2', 'max:500'],
+        ], [
+            'required' => "il campo del :attribute è obbligatorio",
+            'title.unique' => "il post $request->title esiste già"
+
+        ]);
+        //todo ----------------------------
+
         $data = $request->all();
         $data['slug'] = Str::slug($data['title'], '-');
         $post->update($data);
