@@ -2,12 +2,12 @@
 @section('content')
 <div class="container">
     <h3>I miei post</h3>
-    <table class="table">
+    <table class="table table-primary">
     <thead>
         <tr>
-        <th scope="col">Title</th>
-        <th scope="col">Scitto il</th>
-        <th scope="col"></th>
+        <th class="bg-secondary text-white" scope="col">Title</th>
+        <th class="bg-secondary text-white" scope="col">Scitto il</th>
+        <th class="bg-secondary text-white" scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +28,11 @@
         @endforelse
     </tbody>
     </table>
+
+    {{-- creo pulsanti di navigazione da paginate su PostController --}}
+    <footer class="d-flex justify-content-center">
+        {{$posts->links()}}
+    </footer>
 </div>
     
 @endsection
