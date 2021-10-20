@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    protected $fillable = ['title', 'content', 'slug', 'image'];
+
+
     //! creazione campo per le date con carbon   
     public function getFormattedDate($column, $format = 'd-m-Y H:m')
     {
