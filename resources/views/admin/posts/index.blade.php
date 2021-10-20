@@ -57,7 +57,7 @@
                 deleteButtons.forEach(form => {
                     form.addEventListener('submit', function(e) {
                         e.preventDefault();
-                        const conf = confirm('Sei siccuro di voler cancellare questo post?');
+                        const conf = confirm('Sei sicuro di voler cancellare questo post?');
                         if (conf) this.submit();
                     });
                 });
