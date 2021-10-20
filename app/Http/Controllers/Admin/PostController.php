@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -26,7 +27,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        
+
+        $post = new Post();
+        return view("admin.posts.create", compact('post'));
     }
 
     /**
@@ -37,7 +41,29 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //todo VALIDAZIONE viene fatta qui per in create
+        $request->validate([
+            // unique verifica se ci sono altri titoli uguali
+            'title' => ['required', 'string', 'unique:posts', 'min:2', 'max:255'],
+            'content' => ['required', 'string', 'min:2', 'max:1000'],
+            'image' => ['required', 'string', 'min:2', 'max:500'],
+        ], [
+            'required' => "il campo del :attribute è obbligatorio",
+            'title.unique' => "il fumetto $request->title esiste già",
+
+        ]);
+        //todo ----------------------------
+
+        $data = $request->all();
+
+        $post = new Post();
+        $post->fill($data);
+        $post->slug = Str::slug($post->title, '-');
+
+        
+        $post->save();
+
+        return redirect()->route('admin.posts.show', compact('post'));
     }
 
     /**
@@ -57,9 +83,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
+
     }
 
     /**
@@ -69,9 +96,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->all();
+        $data['slug'] = Str::slug($data['title'], '-');
+        $post->update($data);
+
+        return redirect()->route('admin.posts.show', $post->id);
+
     }
 
     /**
