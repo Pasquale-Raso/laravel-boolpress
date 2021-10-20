@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
+    @if ( session('alert-message' ))
+        <div class="alert alert-{{ session('alert-type') }}">
+        {{ session('alert-message' )}}
+        </div>   
+    @endif
     <div class="my-2 d-flex justify-content-between align-items-center">
         <h3>I tuoi post</h3>
         <a href="{{route('admin.posts.create')}}" class="btn btn-success p-1" >Nuovo post</a>
@@ -8,6 +13,7 @@
     <table class="table table-primary">
     <thead>
         <tr>
+        <th class="bg-secondary text-white" scope="col">Id</th>
         <th class="bg-secondary text-white" scope="col">Title</th>
         <th class="bg-secondary text-white" scope="col">Scitto il</th>
         <th class="bg-secondary text-white" scope="col"></th>
@@ -16,6 +22,7 @@
     <tbody>
         @forelse ($posts as $post)
         <tr>
+            <td>{{$post->id}}</td>
             <td>{{$post->title}}</td>
             <td>{{$post->getFormattedDate('created_at')}}</td>
             <td class="d-flex justify-content-end">

@@ -80,8 +80,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post-> delete();
+        // puoi agiungere il with se vuoi far uscire l'alert dell'avvenuta cancellazione (dopo di che lo inserisci nell'index.blade.php)
+        return redirect()->route('admin.posts.index')->with('alert-message', 'Post eliminato')->with('alert-type', 'danger');
     }
 }
