@@ -1947,6 +1947,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Header"
 });
@@ -37738,8 +37745,33 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", [_c("h1", [_vm._v("BoolPress")])])
+    return _c("div", [
+      _c("nav", { staticClass: "bg-primary mb-4 d-flex align-items-center" }, [
+        _c("div", { staticClass: "container" }, [
+          _c(
+            "div",
+            {
+              staticClass: "d-flex justify-content-between align-items-center"
+            },
+            [
+              _c("h1", { staticClass: "text-white mt-2" }, [
+                _vm._v("BoolPress")
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "text-decoration-none text-white",
+                    attrs: { href: "./login" }
+                  },
+                  [_vm._v("Login")]
+                )
+              ])
+            ]
+          )
+        ])
+      ])
     ])
   }
 ]
@@ -37765,8 +37797,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card my-3" }, [
-    _c("div", { staticClass: "card-header" }, [
-      _vm._v("\n    " + _vm._s(_vm.post.title) + "\n  ")
+    _c("div", { staticClass: "card-header bg-secondary text-white" }, [
+      _c("h4", [_vm._v(_vm._s(_vm.post.title))])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-3" }, [
@@ -37809,7 +37841,7 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
-      _c("h4", [_vm._v("I miei Post")]),
+      _c("h2", { staticClass: "text-center" }, [_vm._v("I miei Post")]),
       _vm._v(" "),
       _vm._l(_vm.posts, function(post) {
         return _c("PostCard", { key: post.id, attrs: { post: post } })

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h4>I miei Post</h4>
+    <h2 class="text-center">I miei Post</h2>
     <PostCard v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>

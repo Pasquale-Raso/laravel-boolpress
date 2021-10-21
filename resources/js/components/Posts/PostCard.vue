@@ -1,7 +1,7 @@
 <template>
   <div class="card my-3">
-    <div class="card-header">
-      {{ post.title }}
+    <div class="card-header bg-secondary text-white">
+      <h4>{{ post.title }}</h4>
     </div>
     <div class="p-3">
       <p>{{ post.content }}</p>
