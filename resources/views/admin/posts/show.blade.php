@@ -2,6 +2,7 @@
 @section('content')
     <div class="container">
         <h3>{{$post->title}}</h3>
+        <h5> Categoria: @if ($post->category) {{ $post->category->name }} @else nessuna categoria @endif</h5>
         <p>{{$post->content}}</p>
         <address>{{$post->getFormattedDate('created_at')}}</address>
     </div>

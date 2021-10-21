@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Post;
+use App\Model\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -28,10 +29,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        
-
         $post = new Post();
-        return view("admin.posts.create", compact('post'));
+        $categories = Category::all();
+        return view('admin.posts.create', compact('post', 'categories'));
+        
     }
 
     /**
@@ -48,6 +49,7 @@ class PostController extends Controller
             'title' => ['required', 'string', 'unique:posts', 'min:2', 'max:255'],
             'content' => ['required', 'string', 'min:2', 'max:1000'],
             'image' => ['required', 'string', 'min:2', 'max:500'],
+            'category_id' => 'nullable|exists:categories,id'
         ], [
             'required' => "il campo del :attribute è obbligatorio",
             'title.unique' => "il post $request->title esiste già"
@@ -86,7 +88,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        
+        $categories = Category::all();
+        
+        return view('admin.posts.edit', compact('post', 'categories'));
+        
 
     }
 
@@ -108,6 +114,8 @@ class PostController extends Controller
             'title' => ['required', 'string', Rule::unique('posts')->ignore($post->id), 'min:2', 'max:255'],
             'content' => ['required', 'string', 'min:2', 'max:1000'],
             'image' => ['required', 'string', 'min:2', 'max:500'],
+            'category_id' => 'nullable|exists:categories,id'
+
         ], [
             'required' => "il campo del :attribute è obbligatorio",
             'title.unique' => "il post $request->title esiste già"

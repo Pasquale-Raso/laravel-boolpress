@@ -54,6 +54,15 @@
       @enderror
       </div>
 
+      <div class="form-group mb-4 d-flex align-items-center justify-content-center justify-content-between">
+        <label class="mr-4" for="category_id">Categoria</label>
+        <select class="form-control" id="category_id" name="category_id">
+          <option>Nessuna categoria</option>
+          @foreach ($categories as $category)
+            <option value="{{$category->id}}">{{$category->name}}</option>  
+          @endforeach
+        </select>
+      </div>
       
       <hr>
       <div class="d-flex align-items-center justify-content-center mb-5">

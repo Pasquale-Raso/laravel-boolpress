@@ -15,6 +15,7 @@
             <tr>
             <th class="bg-secondary text-white" scope="col">Id</th>
             <th class="bg-secondary text-white" scope="col">Title</th>
+            <th class="bg-secondary text-white" scope="col">Categoria</th>
             <th class="bg-secondary text-white" scope="col">Scitto il</th>
             <th class="bg-secondary text-white" scope="col"></th>
             </tr>
@@ -24,6 +25,12 @@
             <tr>
                 <td>{{$post->id}}</td>
                 <td>{{$post->title}}</td>
+                <td> 
+                    @if ($post->category)
+                    <span class="text-center badge badge-pill badge-dark">{{$post->category->name}}</span>
+                    @else - 
+                    @endif
+                </td>
                 <td>{{$post->getFormattedDate('created_at')}}</td>
                 <td class="d-flex justify-content-end">
                     <a href="{{route('admin.posts.show', $post->id)}}" class="btn btn-primary ml-2">Vai</a>
