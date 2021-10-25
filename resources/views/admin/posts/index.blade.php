@@ -27,7 +27,7 @@
                 <td>{{$post->title}}</td>
                 <td> 
                     @if ($post->category)
-                    <span class="text-center badge badge-pill badge-dark">{{$post->category->name}}</span>
+                    <span class=" badge badge-pill badge-dark">{{$post->category->name}}</span>
                     @else - 
                     @endif
                 </td>
