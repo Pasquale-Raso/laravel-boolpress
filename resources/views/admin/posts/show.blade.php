@@ -3,6 +3,13 @@
     <div class="container">
         <h3>{{$post->title}}</h3>
         <h5> Categoria: @if ($post->category) {{ $post->category->name }} @else nessuna categoria @endif</h5>
+        <h5> Tag: 
+            @foreach ($post->tags as $tag)
+            <span class="text-white badge badge-pill" style="background-color: {{$tag->color}}">
+            {{$tag->name}}
+            </span>
+            @endforeach
+        </h5>
         <p>{{$post->content}}</p>
         <address>{{$post->getFormattedDate('created_at')}}</address>
     </div>

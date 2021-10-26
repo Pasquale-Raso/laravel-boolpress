@@ -16,6 +16,7 @@
             <th class="bg-secondary text-white" scope="col">Id</th>
             <th class="bg-secondary text-white" scope="col">Title</th>
             <th class="bg-secondary text-white" scope="col">Categoria</th>
+            <th class="bg-secondary text-white" scope="col">Tags</th>
             <th class="bg-secondary text-white" scope="col">Scitto il</th>
             <th class="bg-secondary text-white" scope="col"></th>
             </tr>
@@ -31,6 +32,18 @@
                     @else - 
                     @endif
                 </td>
+
+                <td>
+                    @forelse ($post->tags as $tag)
+                        <span class="text-white badge badge-pill" style="background-color: {{$tag->color}}">
+                            {{$tag->name}}
+                        </span>
+                    @empty -
+                        
+                    @endforelse
+                </td>
+
+
                 <td>{{$post->getFormattedDate('created_at')}}</td>
                 <td class="d-flex justify-content-end">
                     <a href="{{route('admin.posts.show', $post->id)}}" class="btn btn-primary ml-2">Vai</a>

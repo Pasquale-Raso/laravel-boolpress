@@ -59,11 +59,22 @@
         <select class="form-control" id="category_id" name="category_id">
           <option>Nessuna categoria</option>
           @foreach ($categories as $category)
-            <option value="{{$category->id}}">{{$category->name}}</option>  
+            <option @if (old('category_id', $post->category_id) == $category->id) selected @endif value="{{$category->id}}">{{$category->name}}</option>  
           @endforeach
         </select>
       </div>
       
+      <div class="d-flex align-items-center">
+        <h6 class="mr-5">Tags</h6>
+        @foreach ($tags as $tag)
+          <div class="form-check form-check-inline ">
+          <input class="form-check-input" type="checkbox" id="tags-{{$tag->id}}" value="{{$tag->id}}"
+              name="tags[]" @if (in_array($tag->id, old('tags', $tagIds ?? []))) checked @endif>
+          <label class="form-check-label" for="tags-{{$tag->id}}">{{$tag->name}}</label>
+        </div>
+        @endforeach
+      </div>
+
       <hr>
       <div class="d-flex align-items-center justify-content-center mb-5">
         <button class="btn btn-success" type="submit" value="Invia">Invia</button>

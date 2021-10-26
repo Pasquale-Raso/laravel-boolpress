@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Post;
 use App\Model\Category;
 use App\Http\Controllers\Controller;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -31,7 +32,8 @@ class PostController extends Controller
     {
         $post = new Post();
         $categories = Category::all();
-        return view('admin.posts.create', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('tags', 'post', 'categories'));
         
     }
 
@@ -49,7 +51,9 @@ class PostController extends Controller
             'title' => ['required', 'string', 'unique:posts', 'min:2', 'max:255'],
             'content' => ['required', 'string', 'min:2', 'max:1000'],
             'image' => ['required', 'string', 'min:2', 'max:500'],
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id'
+
         ], [
             'required' => "il campo del :attribute è obbligatorio",
             'title.unique' => "il post $request->title esiste già"
@@ -65,6 +69,8 @@ class PostController extends Controller
 
         
         $post->save();
+
+        if (array_key_exists('tags', $data)) $post->tags()->attach($data['tags']);
 
         return redirect()->route('admin.posts.show', compact('post'));
     }
@@ -89,10 +95,10 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         
+        $tags = Tag::all();
         $categories = Category::all();
-        
-        return view('admin.posts.edit', compact('post', 'categories'));
-        
+        $tagIds= $post->tags->pluck('id')->toArray();
+        return view('admin.posts.edit', compact('tags', 'post', 'tagIds', 'categories'));
 
     }
 
@@ -114,7 +120,8 @@ class PostController extends Controller
             'title' => ['required', 'string', Rule::unique('posts')->ignore($post->id), 'min:2', 'max:255'],
             'content' => ['required', 'string', 'min:2', 'max:1000'],
             'image' => ['required', 'string', 'min:2', 'max:500'],
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id'
 
         ], [
             'required' => "il campo del :attribute è obbligatorio",
@@ -125,6 +132,10 @@ class PostController extends Controller
 
         $data = $request->all();
         $data['slug'] = Str::slug($data['title'], '-');
+
+        if(!array_key_exists('tags', $data)) $post->tags()->detach();
+        else $post->tags()->sync($data['tags']);
+
         $post->update($data);
 
         return redirect()->route('admin.posts.show', $post->id);

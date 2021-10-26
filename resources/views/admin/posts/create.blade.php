@@ -62,7 +62,19 @@
           @endforeach
         </select>
       </div>
-      
+
+
+      <div class="d-flex align-items-center">
+        <h6 class="mr-5">Tags</h6>
+        @foreach ($tags as $tag)
+          <div class="form-check form-check-inline ">
+          <input class="form-check-input" type="checkbox" id="tags-{{$tag->id}}" value="{{$tag->id}}" name="tags[]" @if (in_array($tag->id, old('tags', []))) checked @endif>
+          <label class="form-check-label" for="tags-{{$tag->id}}">{{$tag->name}}</label>
+        </div>
+        @endforeach
+      </div>
+
+
       <hr>
       <div class="d-flex align-items-center justify-content-center mb-5">
         <button class="btn btn-success" type="submit" value="Invia">Invia</button>
